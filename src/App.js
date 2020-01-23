@@ -1,24 +1,60 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import './App.scss';
 
-function App() {
+const App = () => {
+
+  const [ state, setState ] = useState({
+    size: null,
+    speed: null,
+    time: 0,
+  })
+
+  useEffect(() => {
+    calculateTime(state.speed, state.size)
+  }, [state.size, state.speed])
+
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    })
+  }
+  // size: 10gb
+  // speed: 10 mbps
+  let time = 0;
+  const calculateTime = (speed, size) => {
+    if (!state.size || !state.speed) {
+      setState({
+        ...state,
+        time: 0,
+      })
+      return
+    }
+    speed = speed / 8
+    size = size * 1000
+    time = size / speed
+    setState({
+      ...state,
+      time: time / 60,
+    })
+
+  }
+
+  const handleCalculateClick = () => {
+    calculateTime(state.speed, state.size)
+  }
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div>Header</div>
+      </header> 
+      <body className="App-body">
+        <div>Hello, World</div>
+        Internet Speed: <input value={state.speed} onChange={handleChange} name="speed" /> Mbps
+        File Size: <input value={state.size} onChange={handleChange} name="size" /> GB
+        <button onClick={handleCalculateClick}>Caclculate</button>
+        <div>Time: {state.time}</div>
+      </body>
     </div>
   );
 }
