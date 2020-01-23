@@ -1,24 +1,86 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import './App.scss';
 
-function App() {
+const App = () => {
+
+  const [ state, setState ] = useState({
+    size: "",
+    speed: "",
+    time: 0,
+    hours: "",
+    mins: "",
+    seconds: "",
+  })
+
+  useEffect(() => {
+    calculateTime(state.speed, state.size)
+  }, [state.size, state.speed])
+
+  const handleChange = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    })
+  }
+  // size: 10gb
+  // speed: 10 mbps
+  let time = 0;
+  const calculateTime = (speed, size) => {
+    if (!state.size || !state.speed || state.size <= 0 || state.speed <= 0) {
+      setState({
+        ...state,
+        time: 0,
+      })
+      return
+    }
+    speed = speed / 8
+    size = size * 1000
+    time = size / speed
+    let hours = Math.floor(time / 60 / 60);
+    let minutes = Math.floor(time / 60) - (hours * 60);
+    let seconds = time % 60;
+    setState({
+      ...state,
+      hours: hours,
+      mins: minutes,
+      seconds: seconds,
+    })
+  }
+
+  const handleCalculateClick = () => {
+    calculateTime(state.speed, state.size)
+  }
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h2>Download Time Calculator</h2>
+      </header> 
+      <div className="App-div">
+        <div className="info">Caclulate how long it will take something to download (or upload).</div>
+        <div className="speed-title">Internet Speed</div>
+        <form>
+          <div className="speed-input" >
+            <input value={state.speed} onChange={handleChange} name="speed" />
+            <select>
+              <option value="mbps">mbps</option>
+            </select>
+          </div>
+          <div className="file-title">File Size</div>
+          <div className="file-input">
+            <input value={state.size} onChange={handleChange} name="size" />
+            <select>
+              <option value="GB">GB</option>
+            </select>
+          </div>
+          <button onClick={handleCalculateClick}>Caclculate</button>
+        </form>
+        <div>
+          <h4>Time to Download</h4>
+          <div>{state.hours} Hours</div>
+          <div>{state.mins} Minutes</div>
+          <div>{state.seconds} Seconds</div>
+        </div>
+      </div>
     </div>
   );
 }
