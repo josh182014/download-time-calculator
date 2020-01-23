@@ -2,7 +2,48 @@
   .App-header {
     text-align: center;
   }
-  .App-body {
+  .App-div {
     text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+
+    .info {
+      margin-bottom: 30px;
+    }
+
+    input {
+      height: 20px;
+      width: 50%;
+      margin: 10px;
+      font-size: 16px;
+      padding: 5px;
+    }
+
+    select {
+      height: 30px;
+      width: 100px;
+      margin: 10px;
+    }
+
+    .speed-input {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+    }
+    .file-input {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+    }
+
+    button {
+      height: 40px;
+      width: 20%;
+      margin: 5px;
+    }
   }
 }

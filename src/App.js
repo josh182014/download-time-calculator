@@ -4,9 +4,12 @@ import './App.scss';
 const App = () => {
 
   const [ state, setState ] = useState({
-    size: null,
-    speed: null,
+    size: "",
+    speed: "",
     time: 0,
+    hours: "",
+    mins: "",
+    seconds: "",
   })
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const App = () => {
   // speed: 10 mbps
   let time = 0;
   const calculateTime = (speed, size) => {
-    if (!state.size || !state.speed) {
+    if (!state.size || !state.speed || state.size <= 0 || state.speed <= 0) {
       setState({
         ...state,
         time: 0,
@@ -33,11 +36,15 @@ const App = () => {
     speed = speed / 8
     size = size * 1000
     time = size / speed
+    let hours = Math.floor(time / 60 / 60);
+    let minutes = Math.floor(time / 60) - (hours * 60);
+    let seconds = time % 60;
     setState({
       ...state,
-      time: time / 60,
+      hours: hours,
+      mins: minutes,
+      seconds: seconds,
     })
-
   }
 
   const handleCalculateClick = () => {
@@ -46,15 +53,34 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-        <div>Header</div>
+        <h2>Download Time Calculator</h2>
       </header> 
-      <body className="App-body">
-        <div>Hello, World</div>
-        Internet Speed: <input value={state.speed} onChange={handleChange} name="speed" /> Mbps
-        File Size: <input value={state.size} onChange={handleChange} name="size" /> GB
-        <button onClick={handleCalculateClick}>Caclculate</button>
-        <div>Time: {state.time}</div>
-      </body>
+      <div className="App-div">
+        <div className="info">Caclulate how long it will take something to download (or upload).</div>
+        <div className="speed-title">Internet Speed</div>
+        <form>
+          <div className="speed-input" >
+            <input value={state.speed} onChange={handleChange} name="speed" />
+            <select>
+              <option value="mbps">mbps</option>
+            </select>
+          </div>
+          <div className="file-title">File Size</div>
+          <div className="file-input">
+            <input value={state.size} onChange={handleChange} name="size" />
+            <select>
+              <option value="GB">GB</option>
+            </select>
+          </div>
+          <button onClick={handleCalculateClick}>Caclculate</button>
+        </form>
+        <div>
+          <h4>Time to Download</h4>
+          <div>{state.hours} Hours</div>
+          <div>{state.mins} Minutes</div>
+          <div>{state.seconds} Seconds</div>
+        </div>
+      </div>
     </div>
   );
 }
