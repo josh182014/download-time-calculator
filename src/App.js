@@ -64,14 +64,14 @@ const App = () => {
         <div className="speed-title">Internet Speed</div>
         <form>
           <div className="speed-input" >
-            <input value={state.speed} onChange={handleChange} name="speed" />
+            <input value={state.speed} onChange={handleChange} name="speed" type="number" />
             <select>
               <option value="mbps">mbps</option>
             </select>
           </div>
           <div className="file-title">File Size</div>
           <div className="file-input">
-            <input value={state.size} onChange={handleChange} name="size" />
+            <input value={state.size} onChange={handleChange} name="size" type="number" />
             <select>
               <option value="GB">GB</option>
             </select>
