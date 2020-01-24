@@ -30,6 +30,9 @@ const App = () => {
       setState({
         ...state,
         time: 0,
+        hours: "",
+        mins: "",
+        seconds: "",
       })
       return
     }
@@ -47,7 +50,8 @@ const App = () => {
     })
   }
 
-  const handleCalculateClick = () => {
+  const handleCalculateClick = (e) => {
+    e.preventDefault();
     calculateTime(state.speed, state.size)
   }
   return (
