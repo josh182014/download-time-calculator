@@ -79,9 +79,9 @@ const App = () => {
         </form>
         <div>
           <h3>Time to Download</h3>
-          {state.hours && <div>{state.hours} Hours</div>}
-          {state.mins && <div>{state.mins} Minutes</div>}
-          {state.seconds && <div>{state.seconds} Seconds</div>}
+          {state.hours ?  <div>{state.hours} Hours</div> : null}
+          {state.mins ? <div>{state.mins} Minutes</div>: null}
+          {state.seconds ? <div>{state.seconds} Seconds</div> : null}
         </div>
       </div>
     </div>
