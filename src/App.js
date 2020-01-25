@@ -41,7 +41,7 @@ const App = () => {
     time = size / speed
     let hours = Math.floor(time / 60 / 60);
     let minutes = Math.floor(time / 60) - (hours * 60);
-    let seconds = time % 60;
+    let seconds = Math.floor(time % 60);
     setState({
       ...state,
       hours: hours,
@@ -76,13 +76,12 @@ const App = () => {
               <option value="GB">GB</option>
             </select>
           </div>
-          <button onClick={handleCalculateClick}>Caclculate</button>
         </form>
         <div>
-          <h4>Time to Download</h4>
-          <div>{state.hours} Hours</div>
-          <div>{state.mins} Minutes</div>
-          <div>{state.seconds} Seconds</div>
+          <h3>Time to Download</h3>
+          {state.hours && <div>{state.hours} Hours</div>}
+          {state.mins && <div>{state.mins} Minutes</div>}
+          {state.seconds && <div>{state.seconds} Seconds</div>}
         </div>
       </div>
     </div>
