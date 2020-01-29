@@ -49,11 +49,6 @@ const App = () => {
       seconds: seconds,
     })
   }
-
-  const handleCalculateClick = (e) => {
-    e.preventDefault();
-    calculateTime(state.speed, state.size)
-  }
   return (
     <div className="App">
       <header className="App-header">
